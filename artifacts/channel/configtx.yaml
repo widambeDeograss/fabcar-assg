@@ -68,7 +68,7 @@ Organizations:
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
             - Host: peer0.org1.example.com
-              Port: 7051
+              Port: 3051
 
     - &Org2
         # DefaultOrg defines the organization which is used in the sampleconfig
@@ -102,7 +102,7 @@ Organizations:
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
             - Host: peer0.org2.example.com
-              Port: 9051
+              Port: 5051
 
 ################################################################################
 #
@@ -211,13 +211,13 @@ Orderer: &OrdererDefaults
 
     EtcdRaft:
         Consenters:
-        - Host: orderer.example.com
-          Port: 7050
+        - Host: orderer.fabcar.example.com
+          Port: 3050
           ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
           ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
 
     Addresses:
-        - orderer.example.com:7050
+        - orderer.fabcar.example.com:fabcar
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
