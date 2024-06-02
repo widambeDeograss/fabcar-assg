@@ -322,16 +322,16 @@ Profiles:
             OrdererType: etcdraft
             EtcdRaft:
                 Consenters:
-                - Host: orderer.example.com
-                  Port: 7050
-                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
-                - Host: orderer2.example.com
-                  Port: 8050
-                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
-                - Host: orderer3.example.com
-                  Port: 9050
+                - Host: orderer.fabcar.example.com
+                  Port: 3050
+                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.fabcar.example.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.fabcar.example.com/tls/server.crt
+                - Host: orderer2.fabcar.example.com
+                  Port: 5050
+                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/ orderer2.fabcar.example.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/ orderer2.fabcar.example.com/tls/server.crt
+                - Host: orderer3.fabcar.example.com
+                  Port: 6050
                   ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
                   ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
                 # - Host: orderer4.example.com
@@ -343,9 +343,9 @@ Profiles:
                 #   ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer5.example.com/tls/server.crt
                 #   ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer5.example.com/tls/server.crt
             Addresses:
-                - orderer.example.com:7050
-                - orderer2.example.com:8050
-                - orderer3.example.com:9050
+                - orderer.fabcar.example.com:7050
+                - orderer2.fabcar.example.com:8050
+                - orderer3.fabcar.example.com:9050
                 # - orderer4.example.com:10050
                 # - orderer5.example.com:11050
 
