@@ -343,9 +343,9 @@ Profiles:
                 #   ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer5.example.com/tls/server.crt
                 #   ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer5.example.com/tls/server.crt
             Addresses:
-                - orderer.fabcar.example.com:7050
-                - orderer2.fabcar.example.com:8050
-                - orderer3.fabcar.example.com:9050
+                - orderer.fabcar.example.com:3050
+                - orderer2.fabcar.example.com:5050
+                - orderer3.fabcar.example.com:6050
                 # - orderer4.example.com:10050
                 # - orderer5.example.com:11050
 
