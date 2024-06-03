@@ -84,8 +84,8 @@ services:
       - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer.fabcar.example.com/tls:/var/hyperledger/orderer/tls
       - /var/pavan/orderer:/var/hyperledger/production
 
-  orderer2.example.com:
-    container_name: orderer2.example.com
+  orderer2.fabcar.example.com:
+    container_name: orderer2.fabcar.example.com
     image: hyperledger/fabric-orderer:2.1
     dns_search: .
     environment:
@@ -106,21 +106,21 @@ services:
       - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
       - ORDERER_METRICS_PROVIDER=prometheus
       - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8443
-      - ORDERER_GENERAL_LISTENPORT=8050
+      - ORDERER_GENERAL_LISTENPORT=5050
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
     command: orderer
     ports:
-      - 8050:8050
+      - 5050:5050
       - 8444:8443
     networks:
       - test
     volumes:
       - ./channel/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/msp:/var/hyperledger/orderer/msp
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls:/var/hyperledger/orderer/tls
+      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer2.fabcar.example.com/msp:/var/hyperledger/orderer/msp
+      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer2.fabcar.example.com/tls:/var/hyperledger/orderer/tls
       - /var/pavan/orderer2:/var/hyperledger/production
-  orderer3.example.com:
-    container_name: orderer3.example.com
+  orderer3.fabcar.example.com:
+    container_name: orderer3.fabcar.example.com
     image: hyperledger/fabric-orderer:2.1
     dns_search: .
     environment:
@@ -141,18 +141,18 @@ services:
       - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
       - ORDERER_METRICS_PROVIDER=prometheus
       - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8443
-      - ORDERER_GENERAL_LISTENPORT=9050
+      - ORDERER_GENERAL_LISTENPORT=6050
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
     command: orderer
     ports:
-      - 9050:9050
+      - 6050:6050
       - 8445:8443
     networks:
       - test
     volumes:
       - ./channel/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/msp:/var/hyperledger/orderer/msp
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls:/var/hyperledger/orderer/tls
+      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer3.fabcar.example.com/msp:/var/hyperledger/orderer/msp
+      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer3.fabcar.example.com/tls:/var/hyperledger/orderer/tls
       - /var/pavan/orderer3:/var/hyperledger/production
   couchdb0:
     container_name: couchdb0
@@ -211,12 +211,12 @@ services:
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
 
       - CORE_PEER_ID=peer0.org1.example.com
-      - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:7052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.example.com:8051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:7051
+      - CORE_PEER_ADDRESS=peer0.org1.example.com:3051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:3051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:3052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:3052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.example.com:5051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:3051
 
       # - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:9440
 
@@ -233,7 +233,7 @@ services:
     depends_on:
       - couchdb0
     ports:
-      - 7051:7051
+      - 3051:3051
     volumes:
       - ./channel/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/crypto/peer/msp
       - ./channel/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/crypto/peer/tls
@@ -256,12 +256,12 @@ services:
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
 
       - CORE_PEER_ID=peer1.org1.example.com
-      - CORE_PEER_ADDRESS=peer1.org1.example.com:8051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
-      - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:8052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.example.com:8051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051
+      - CORE_PEER_ADDRESS=peer1.org1.example.com:5051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:5051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:5052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:5052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.example.com:5051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:5051
 
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
@@ -275,7 +275,7 @@ services:
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/crypto/peer/tls/ca.crt
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/crypto/peer/msp
     ports:
-      - 8051:8051
+      - 5051:5051
     volumes:
       - ./channel/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/crypto/peer/msp
       - ./channel/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/crypto/peer/tls
