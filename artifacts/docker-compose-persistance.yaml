@@ -37,7 +37,7 @@ services:
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.org2.example.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
     ports:
-      - "8054:7054"
+      - "4054:3054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./channel/crypto-config/peerOrganizations/org2.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
@@ -74,7 +74,7 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
     command: orderer
     ports:
-      - 7050:7050
+      - 3050:3050
       - 8443:8443
     networks:
       - test
