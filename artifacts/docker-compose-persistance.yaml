@@ -48,8 +48,8 @@ services:
     networks:
       - test
 
-  orderer.example.com:
-    container_name: orderer.example.com
+  orderer.fabcar.example.com:
+    container_name: orderer.fabcar.example.com
     image: hyperledger/fabric-orderer:2.1
     dns_search: .
     environment:
@@ -80,8 +80,8 @@ services:
       - test
     volumes:
       - ./channel/genesis.block:/var/hyperledger/orderer/genesis.block
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls:/var/hyperledger/orderer/tls
+      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer.fabcar.example.com/msp:/var/hyperledger/orderer/msp
+      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer.fabcar.example.com/tls:/var/hyperledger/orderer/tls
       - /var/pavan/orderer:/var/hyperledger/production
 
   orderer2.example.com:
