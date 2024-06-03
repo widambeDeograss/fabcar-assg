@@ -215,7 +215,7 @@ services:
       - CORE_PEER_LISTENADDRESS=0.0.0.0:3051
       - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:3052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:3052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.example.com:5051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.example.com:3061
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:3051
 
       # - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:9440
@@ -256,12 +256,12 @@ services:
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
 
       - CORE_PEER_ID=peer1.org1.example.com
-      - CORE_PEER_ADDRESS=peer1.org1.example.com:5051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:5051
-      - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:5052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:5052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.example.com:5051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:5051
+      - CORE_PEER_ADDRESS=peer1.org1.example.com:3061
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:3061
+      - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:3062
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:3062
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.example.com:3061
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:3061
 
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
@@ -275,7 +275,7 @@ services:
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/crypto/peer/tls/ca.crt
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/crypto/peer/msp
     ports:
-      - 5051:5051
+      - 3061:3061
     volumes:
       - ./channel/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/crypto/peer/msp
       - ./channel/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/crypto/peer/tls
