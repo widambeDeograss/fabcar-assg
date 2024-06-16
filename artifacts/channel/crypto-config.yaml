@@ -11,15 +11,15 @@ OrdererOrgs:
     # "Specs" - See PeerOrgs below for complete description
     # ---------------------------------------------------------------------------
     Specs:
-      - Hostname: orderer
+      - Hostname: orderer.fabcar
         SANS:
             - "localhost"
             - "127.0.0.1"
-      - Hostname: orderer2
+      - Hostname: orderer2.fabcar
         SANS:
           - "localhost"
           - "127.0.0.1"
-      - Hostname: orderer3
+      - Hostname: orderer3.fabcar
         SANS:
             - "localhost"
             - "127.0.0.1"
