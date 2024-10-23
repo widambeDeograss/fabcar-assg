@@ -5,7 +5,7 @@ version: "1.0"
 channels:
   mychannel:
     orderers:
-      - orderer.example.com
+      - orderer.fabcar.example.com
 
     peers:
       peer0.org1.example.com:
@@ -68,25 +68,25 @@ organizations:
 
 orderers:
   orderer.example.com:
-    url: grpcs://localhost:7050
+    url: grpcs://localhost:3050
     grpcOptions:
-      ssl-target-name-override: orderer.example.com
+      ssl-target-name-override: orderer.fabcar.example.com
     tlsCACerts:
-      path: ../artifacts/channel/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt
+      path: ../artifacts/channel/crypto-config/ordererOrganizations/example.com/orderers/orderer.fabcar.example.com/tls/ca.crt
 
   orderer2.example.com:
-    url: grpcs://localhost:8050
+    url: grpcs://localhost:5050
     grpcOptions:
       ssl-target-name-override: orderer2.example.com
     tlsCACerts:
-      path: ../artifacts/channel/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/ca.crt
+      path: ../artifacts/channel/crypto-config/ordererOrganizations/example.com/orderers/orderer2.fabcar.example.com/tls/ca.crt
 
   orderer3.example.com:
-    url: grpcs://localhost:9050
+    url: grpcs://localhost:6050
     grpcOptions:
-      ssl-target-name-override: orderer3.example.com
+      ssl-target-name-override: orderer3.fabcar.example.com
     tlsCACerts:
-      path: ../artifacts/channel/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/ca.crt
+      path: ../artifacts/channel/crypto-config/ordererOrganizations/example.com/orderers/orderer3.fabcar.example.com/tls/ca.crt
 
 #
 # List of peers to send various requests to, including endorsement, query
@@ -94,7 +94,7 @@ orderers:
 #
 peers:
   peer0.org1.example.com:
-    url: grpcs://localhost:7051
+    url: grpcs://localhost:3051
 
     grpcOptions:
       ssl-target-name-override: peer0.org1.example.com
@@ -102,7 +102,7 @@ peers:
       path: ../artifacts/channel/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
 
   peer1.org1.example.com:
-    url: grpcs://localhost:8051
+    url: grpcs://localhost:3061
 
     grpcOptions:
       ssl-target-name-override: peer1.org1.example.com
@@ -110,7 +110,7 @@ peers:
       path: ../artifacts/channel/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
 
   peer0.org2.example.com:
-    url: grpcs://localhost:9051
+    url: grpcs://localhost:5051
 
     grpcOptions:
       ssl-target-name-override: peer0.org2.example.com
@@ -131,7 +131,7 @@ peers:
 #
 certificateAuthorities:
   ca.org1.example.com:
-    url: https://localhost:7054
+    url: https://localhost:3054
     httpOptions:
       verify: false
     tlsCACerts:
@@ -143,7 +143,7 @@ certificateAuthorities:
     caName: ca.org1.example.com
 
   ca.org2.example.com:
-    url: https://localhost:8054
+    url: https://localhost:4054
     httpOptions:
       verify: false
     tlsCACerts:

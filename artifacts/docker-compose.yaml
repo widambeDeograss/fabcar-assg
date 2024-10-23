@@ -15,11 +15,12 @@ services:
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.org1.example.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
     ports:
-      - "7054:7054"
+      - "3054:3054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./channel/crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
       - ./channel/crypto-config/peerOrganizations/org1.example.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+      - /var/pavan/ca-org1:/etc/hyperledger
     container_name: ca.org1.example.com
     hostname: ca.org1.example.com
     networks:
@@ -36,18 +37,19 @@ services:
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.org2.example.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
     ports:
-      - "8054:7054"
+      - "4054:4054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./channel/crypto-config/peerOrganizations/org2.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
       - ./channel/crypto-config/peerOrganizations/org2.example.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+      - /var/pavan/ca-org2:/etc/hyperledger
     container_name: ca.org2.example.com
     hostname: ca.org2.example.com
     networks:
       - test
 
-  orderer.example.com:
-    container_name: orderer.example.com
+  orderer.fabcar.example.com:
+    container_name: orderer.fabcar.example.com
     image: hyperledger/fabric-orderer:2.1
     dns_search: .
     environment:
@@ -67,27 +69,28 @@ services:
       - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/var/hyperledger/orderer/tls/server.key
       - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
       - ORDERER_METRICS_PROVIDER=prometheus
-      - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8443
-      - ORDERER_GENERAL_LISTENPORT=7050
+      - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8456
+      - ORDERER_GENERAL_LISTENPORT=3050
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
     command: orderer
     ports:
-      - 7050:7050
-      - 8443:8443
+      - 3050:3050
+      - 8457:8456
     networks:
       - test
     volumes:
       - ./channel/genesis.block:/var/hyperledger/orderer/genesis.block
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls:/var/hyperledger/orderer/tls
+      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer.fabcar.example.com/msp:/var/hyperledger/orderer/msp
+      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer.fabcar.example.com/tls:/var/hyperledger/orderer/tls
+      - /var/pavan/orderer:/var/hyperledger/production
 
-  orderer2.example.com:
-    container_name: orderer2.example.com
+  orderer2.fabcar.example.com:
+    container_name: orderer2.fabcar.example.com
     image: hyperledger/fabric-orderer:2.1
     dns_search: .
     environment:
-      - ORDERER_GENERAL_LOGLEVEL=info
-      - FABRIC_LOGGING_SPEC=info
+      - ORDERER_GENERAL_LOGLEVEL=debug
+      - FABRIC_LOGGING_SPEC=DEBUG
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
@@ -102,27 +105,27 @@ services:
       - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/var/hyperledger/orderer/tls/server.key
       - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
       - ORDERER_METRICS_PROVIDER=prometheus
-      - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8443
-      - ORDERER_GENERAL_LISTENPORT=8050
+      - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8456
+      - ORDERER_GENERAL_LISTENPORT=5050
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
     command: orderer
     ports:
-      - 8050:8050
-      - 8444:8443
+      - 5050:5050
+      - 8458:8456
     networks:
       - test
     volumes:
       - ./channel/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/msp:/var/hyperledger/orderer/msp
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls:/var/hyperledger/orderer/tls
-
-  orderer3.example.com:
-    container_name: orderer3.example.com
+      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer2.fabcar.example.com/msp:/var/hyperledger/orderer/msp
+      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer2.fabcar.example.com/tls:/var/hyperledger/orderer/tls
+      - /var/pavan/orderer2:/var/hyperledger/production
+  orderer3.fabcar.example.com:
+    container_name: orderer3.fabcar.example.com
     image: hyperledger/fabric-orderer:2.1
     dns_search: .
     environment:
-      - ORDERER_GENERAL_LOGLEVEL=info
-      - FABRIC_LOGGING_SPEC=info
+      - ORDERER_GENERAL_LOGLEVEL=debug
+      - FABRIC_LOGGING_SPEC=DEBUG
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
@@ -137,19 +140,20 @@ services:
       - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/var/hyperledger/orderer/tls/server.key
       - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
       - ORDERER_METRICS_PROVIDER=prometheus
-      - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8443
-      - ORDERER_GENERAL_LISTENPORT=9050
+      - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8456
+      - ORDERER_GENERAL_LISTENPORT=6050
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
     command: orderer
     ports:
-      - 9050:9050
-      - 8445:8443
+      - 6050:6050
+      - 8459:8456
     networks:
       - test
     volumes:
       - ./channel/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/msp:/var/hyperledger/orderer/msp
-      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls:/var/hyperledger/orderer/tls
+      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer3.fabcar.example.com/msp:/var/hyperledger/orderer/msp
+      - ./channel/crypto-config/ordererOrganizations/example.com/orderers/orderer3.fabcar.example.com/tls:/var/hyperledger/orderer/tls
+      - /var/pavan/orderer3:/var/hyperledger/production
 
   couchdb0:
     container_name: couchdb0
@@ -158,7 +162,7 @@ services:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
     ports:
-      - 5984:5984
+      - 15984:15984
     networks:
       - test
 
@@ -169,7 +173,7 @@ services:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
     ports:
-      - 6984:5984
+      - 16984:15984
     networks:
       - test
 
@@ -180,7 +184,7 @@ services:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
     ports:
-      - 7984:5984
+      - 17984:15984
     networks:
       - test
 
@@ -191,7 +195,7 @@ services:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
     ports:
-      - 8984:5984
+      - 18984:15984
     networks:
       - test
 
@@ -201,21 +205,19 @@ services:
       file: base.yaml
       service: peer-base
     environment:
-      - FABRIC_LOGGING_SPEC=info
-      - ORDERER_GENERAL_LOGLEVEL=info
+      - FABRIC_LOGGING_SPEC=DEBUG
+      - ORDERER_GENERAL_LOGLEVEL=DEBUG
       - CORE_PEER_LOCALMSPID=Org1MSP
 
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
 
       - CORE_PEER_ID=peer0.org1.example.com
-      - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:7052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
-      # Peer used to bootstrap gossip within organisation
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.example.com:8051
-      # Exposed for discovery Service
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:7051
+      - CORE_PEER_ADDRESS=peer0.org1.example.com:3051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:3051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:3052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:3052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.example.com:3061
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:3051
 
       # - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:9440
 
@@ -232,12 +234,13 @@ services:
     depends_on:
       - couchdb0
     ports:
-      - 7051:7051
+      - 3051:3051
     volumes:
       - ./channel/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/crypto/peer/msp
       - ./channel/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
       - ./channel/:/etc/hyperledger/channel/
+      - /var/pavan/peer0-org1:/var/hyperledger/production
     networks:
       - test
 
@@ -247,20 +250,19 @@ services:
       file: base.yaml
       service: peer-base
     environment:
-      - FABRIC_LOGGING_SPEC=info
-      - ORDERER_GENERAL_LOGLEVEL=info
+      - FABRIC_LOGGING_SPEC=DEBUG
+      - ORDERER_GENERAL_LOGLEVEL=debug
       - CORE_PEER_LOCALMSPID=Org1MSP
 
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
 
       - CORE_PEER_ID=peer1.org1.example.com
-      - CORE_PEER_ADDRESS=peer1.org1.example.com:8051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
-      - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:8052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
-      # Exposed for discovery Service
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.example.com:8051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051
+      - CORE_PEER_ADDRESS=peer1.org1.example.com:3061
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:3061
+      - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:3062
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:3062
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.example.com:3061
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:3061
 
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
@@ -274,12 +276,13 @@ services:
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/crypto/peer/tls/ca.crt
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/crypto/peer/msp
     ports:
-      - 8051:8051
+      - 3061:3061
     volumes:
       - ./channel/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/crypto/peer/msp
       - ./channel/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
       - ./channel/:/etc/hyperledger/channel/
+      - /var/pavan/peer1-org1:/var/hyperledger/production
     networks:
       - test
 
@@ -289,19 +292,18 @@ services:
       file: base.yaml
       service: peer-base
     environment:
-      - FABRIC_LOGGING_SPEC=info
-      - ORDERER_GENERAL_LOGLEVEL=info
+      - FABRIC_LOGGING_SPEC=DEBUG
+      - ORDERER_GENERAL_LOGLEVEL=debug
       - CORE_PEER_LOCALMSPID=Org2MSP
 
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
 
       - CORE_PEER_ID=peer0.org2.example.com
-      - CORE_PEER_ADDRESS=peer0.org2.example.com:9051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.org2.example.com:9052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
-      # Exposed for discovery Service
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.example.com:9051
+      - CORE_PEER_ADDRESS=peer0.org2.example.com:5051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:5051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.org2.example.com:5052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:5052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.example.com:5051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org2.example.com:10051
 
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
@@ -316,12 +318,13 @@ services:
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/crypto/peer/tls/ca.crt
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/crypto/peer/msp
     ports:
-      - 9051:9051
+      - 5051:5051
     volumes:
       - ./channel/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp:/etc/hyperledger/crypto/peer/msp
       - ./channel/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/etc/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
       - ./channel/:/etc/hyperledger/channel/
+      - /var/pavan/peer0-org2:/var/hyperledger/production
     networks:
       - test
 
@@ -331,8 +334,8 @@ services:
       file: base.yaml
       service: peer-base
     environment:
-      - FABRIC_LOGGING_SPEC=info
-      - ORDERER_GENERAL_LOGLEVEL=info
+      - FABRIC_LOGGING_SPEC=DEBUG
+      - ORDERER_GENERAL_LOGLEVEL=debug
       - CORE_PEER_LOCALMSPID=Org2MSP
 
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
@@ -342,9 +345,8 @@ services:
       - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
       - CORE_PEER_CHAINCODEADDRESS=peer1.org2.example.com:10052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
-      # Exposed for discovery Service
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org2.example.com:10051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.example.com:9051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.example.com:5051
 
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3:5984
@@ -364,5 +366,6 @@ services:
       - ./channel/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls:/etc/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
       - ./channel/:/etc/hyperledger/channel/
+      - /var/pavan/peer1-org2:/var/hyperledger/production
     networks:
       - test

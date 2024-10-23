@@ -176,9 +176,11 @@ const enrollAdmin = async (org, ccp) => {
             console.log('An identity for the admin user "admin" already exists in the wallet');
             return;
         }
-
+        
+        // secret = await ca.register({ affiliation: await getAffiliation(userOrg), enrollmentID: username, role: 'client' }, adminUser);
         // Enroll the admin user, and import the new identity into the wallet.
         const enrollment = await ca.enroll({ enrollmentID: 'admin', enrollmentSecret: 'adminpw' });
+        console.log("-----------------------------------------------------------------------------------------------------",enrollment);
         let x509Identity;
         if (org == "Org1") {
             x509Identity = {

@@ -328,8 +328,8 @@ Profiles:
                   ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.fabcar.example.com/tls/server.crt
                 - Host: orderer2.fabcar.example.com
                   Port: 5050
-                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/ orderer2.fabcar.example.com/tls/server.crt
-                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/ orderer2.fabcar.example.com/tls/server.crt
+                  ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.fabcar.example.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.fabcar.example.com/tls/server.crt
                 - Host: orderer3.fabcar.example.com
                   Port: 6050
                   ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer3.fabcar.example.com/tls/server.crt

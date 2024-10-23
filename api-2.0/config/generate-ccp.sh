@@ -20,7 +20,7 @@ function json_ccp {
 
 ORG=1
 P0PORT=3051
-CAPORT=7054
+CAPORT=3054
 P0PORT1=3061
 PEERPEM=../../artifacts/channel/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem
 PEERPEM1=../../artifacts/channel/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem
@@ -30,8 +30,8 @@ echo "$(json_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM $PEERPEM1 $P0PORT1)" > con
 
 
 ORG=2
-P0PORT=9051
-CAPORT=8054
+P0PORT=5051
+CAPORT=4054
 P0PORT1=10051
 PEERPEM=../../artifacts/channel/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp/tlscacerts/tlsca.org2.example.com-cert.pem
 PEERPEM1=../../artifacts/channel/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/msp/tlscacerts/tlsca.org2.example.com-cert.pem
